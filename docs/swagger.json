@@ -1,0 +1,21 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample server go-echo demo server.",
+        "title": "go-echo-demo Swagger API",
+        "termsOfService": "https://github.com/xiexianbin/go-echo-demo",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.xiexianbin.cn",
+            "email": "me@xiexianbin.cn"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "127.0.0.1:1323",
+    "basePath": "/api",
+    "paths": {}
+}

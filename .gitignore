@@ -18,3 +18,5 @@ bin/
 .history/
 .lh
 .idea/
+vendor/
+*.log

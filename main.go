@@ -1,4 +1,4 @@
-// Copyright 2022 xiexianbin<me@xiexianbin.cn>
+// Copyright 2024 xiexianbin<me@xiexianbin.cn>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,12 +15,36 @@
 package main
 
 import (
-	"fmt"
-	"time"
+	"github.com/labstack/echo/v4"
+
+	"github.com/xiexianbin/go-echo-demo/pkg/custommiddleware"
+	"github.com/xiexianbin/go-echo-demo/router"
 )
 
+// @title go-echo-demo Swagger API
+// @version 1.0
+// @description This is a sample server go-echo demo server.
+// @termsOfService https://github.com/xiexianbin/go-echo-demo
+
+// @contact.name API Support
+// @contact.url http://www.xiexianbin.cn
+// @contact.email me@xiexianbin.cn
+
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host 127.0.0.1:1323
+// @BasePath /api
 func main() {
-	fmt.Println(time.Now().Format("2006-01-02 15:04:05"))
-	v := GetVersion()
-	PrintVersion("go-echo-demo", v, false)
+	// Echo instance
+	e := echo.New()
+
+	// Middleware
+	custommiddleware.Init(e)
+
+	// Routes
+	router.Init(e)
+
+	// Start server
+	e.Logger.Fatal(e.Start(":1323"))
 }

@@ -46,7 +46,12 @@ override LDFLAGS += \
   -X main.gitTreeState=$(GIT_TREE_STATE)
 
 ifneq ($(GIT_TAG),)
-override LDFLAGS += -X main.gitTag=${GIT_TAG}
+override LDFLAGS += -X github.com/xiexianbin/go-echo-demo/main.gitTag=${GIT_TAG}
+endif
+
+ifndef $(GOPATH)
+	GOPATH=$(shell go env GOPATH)
+	export GOPATH
 endif
 
 SUB_BUILD_CMD ?= $(GOBUILD)  -gcflags '${GCFLAGS}' -ldflags '${LDFLAGS}  -extldflags -static'
@@ -106,3 +111,13 @@ docker-build: test  ## Build docker image
 .PHONY: docker-push
 docker-push:  ## Push docker image
 	docker push ${IMG}
+
+$(GOPATH)/bin/swag:
+ifeq (, $(shell which swag))
+	go install github.com/swaggo/swag/cmd/swag@latest
+endif
+
+.PHONY: swagger
+swagger: $(GOPATH)/bin/swag  ## generate swagger docs
+	swag init
+	swag fmt

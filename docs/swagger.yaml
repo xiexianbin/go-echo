@@ -1,0 +1,16 @@
+basePath: /api
+host: 127.0.0.1:1323
+info:
+  contact:
+    email: me@xiexianbin.cn
+    name: API Support
+    url: http://www.xiexianbin.cn
+  description: This is a sample server go-echo demo server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: https://github.com/xiexianbin/go-echo-demo
+  title: go-echo-demo Swagger API
+  version: "1.0"
+paths: {}
+swagger: "2.0"
