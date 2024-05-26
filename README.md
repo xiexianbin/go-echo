@@ -6,9 +6,19 @@
 
 ## Feature
 
-- [swaggo/echo-swagger](https://github.com/swaggo/echo-swagger) echo middleware to automatically generate RESTful API documentation with Swagger 2.0.
-- Prometheus metrics([ref](https://www.xiexianbin.cn/monitor/prometheus/clientlibs/))
-- [go-playground/validator](https://github.com/go-playground/validator) [detail](https://echo.labstack.com/docs/request#validate-data)
+- dev
+  - [x] Makefile
+  - [x] live load by [air](https://github.com/cosmtrek/air)
+  - [ ] [golangci-lint](https://github.com/golangci/golangci-lint)
+- deploy
+  - [x] docker-compose
+- [x] [swaggo/echo-swagger](https://github.com/swaggo/echo-swagger) echo middleware to automatically generate RESTful API documentation with Swagger 2.0.
+- [ ] Prometheus metrics([ref](https://www.xiexianbin.cn/monitor/prometheus/clientlibs/))
+- [ ] [go-playground/validator](https://github.com/go-playground/validator) [detail](https://echo.labstack.com/docs/request#validate-data)
+- DataBase support by [GORM: The fantastic ORM library for Golang](https://gorm.io/)
+  - [x] MySQL Connection Pool
+- Cache
+  - [x] [Redis](https://github.com/redis/go-redis) Connection Pool & Distributed Lock
 
 ## usage
 

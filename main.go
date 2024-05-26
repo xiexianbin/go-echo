@@ -17,30 +17,30 @@ package main
 import (
 	"github.com/labstack/echo/v4"
 
-	"github.com/xiexianbin/go-echo-demo/pkg/custommiddleware"
+	"github.com/xiexianbin/go-echo-demo/pkg/middleware"
 	"github.com/xiexianbin/go-echo-demo/router"
 )
 
-// @title go-echo-demo Swagger API
-// @version 1.0
-// @description This is a sample server go-echo demo server.
-// @termsOfService https://github.com/xiexianbin/go-echo-demo
+//	@title			go-echo-demo Swagger API
+//	@version		1.0
+//	@description	This is a sample server go-echo demo server.
+//	@termsOfService	https://github.com/xiexianbin/go-echo-demo
 
-// @contact.name API Support
-// @contact.url http://www.xiexianbin.cn
-// @contact.email me@xiexianbin.cn
+//	@contact.name	API Support
+//	@contact.url	http://www.xiexianbin.cn
+//	@contact.email	me@xiexianbin.cn
 
-// @license.name Apache 2.0
-// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+//	@license.name	Apache 2.0
+//	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
 
-// @host 127.0.0.1:1323
-// @BasePath /api
+// @host		127.0.0.1:1323
+// @BasePath	/api
 func main() {
 	// Echo instance
 	e := echo.New()
 
 	// Middleware
-	custommiddleware.Init(e)
+	middleware.Init(e)
 
 	// Routes
 	router.Init(e)

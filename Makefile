@@ -20,6 +20,8 @@ GOBUILD ?= $(GOCMD) build -v
 GOCLEAN ?= $(GOCMD) clean
 GOTEST  ?= $(GOCMD) test -v -p 20
 
+LINTER_VERSION=v1.58.2
+
 linux-amd64: GOARGS = GOOS=linux GOARCH=amd64
 linux-arm64: GOARGS = GOOS=linux GOARCH=arm64
 linux-ppc64le: GOARGS = GOOS=linux GOARCH=ppc64le
@@ -117,7 +119,38 @@ ifeq (, $(shell which swag))
 	go install github.com/swaggo/swag/cmd/swag@latest
 endif
 
-.PHONY: swagger
-swagger: $(GOPATH)/bin/swag  ## generate swagger docs
+docs/docs.go: $(GOPATH)/bin/swag  ## generate swagger docs
+# ifeq ($(wildcard docs/docs.go),)
 	swag init
+# endif
+
+.PHONY: swagger
+swagger: docs/docs.go  ## format swagger docs
 	swag fmt
+
+$(GOPATH)/bin/stringer:
+ifeq (, $(shell which stringer))
+	go install golang.org/x/tools/cmd/stringer@latest
+endif
+
+.PHONY: codegin
+codegin: $(GOPATH)/bin/stringer  ## generate swagger docs
+	go generate ./...
+
+$(GOPATH)/bin/golangci-lint:
+ifeq (, $(shell which golangci-lint))
+	curl -k -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin $(LINTER_VERSION)
+endif
+
+.PHONY: lint
+lint: $(GOPATH)/bin/golangci-lint  ## golangci-lint run
+	golangci-lint run
+
+$(GOPATH)/bin/air:
+ifeq (, $(shell which air))
+	go install github.com/cosmtrek/air@latest
+endif
+
+.PHONY: dev
+dev: codegin docs/docs.go $(GOPATH)/bin/air ## go run for dev
+	air
