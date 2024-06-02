@@ -31,4 +31,16 @@ var (
 	// ref https://pkg.go.dev/github.com/go-redis/redis/v8#ParseURL
 	// format redis://<user>:<password>@<host>:<port>/<db_number>
 	REDIS_DSN = util.LookupEnvStringOr("REDIS_DSN", "")
+
+	// Redis Sentinel Cluster connection dsn, like REDIS_CLUTER_DSN
+	// ref https://pkg.go.dev/github.com/redis/go-redis/v9#FailoverOptions
+	REDIS_SENTINEL_DSN = util.LookupEnvStringOr("REDIS_SENTINEL_DSN", "")
+
+	// Redis Cluster connection dns
+	// ref https://pkg.go.dev/github.com/redis/go-redis/v9#ParseClusterURL
+	// format:
+	// redis://<user>:<password>@<host>:<port>?addr=<host2>:<port2>&addr=<host3>:<port3>
+	// or
+	// rediss://<user>:<password>@<host>:<port>?addr=<host2>:<port2>&addr=<host3>:<port3>
+	REDIS_CLUTER_DSN = util.LookupEnvStringOr("REDIS_CLUTER_DSN", "")
 )

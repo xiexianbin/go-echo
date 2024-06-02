@@ -17,6 +17,7 @@
 package redis
 
 import (
+	"context"
 	"sync"
 	"time"
 
@@ -28,15 +29,16 @@ import (
 
 var (
 	rdb  *redis.Client
+	rdbc *redis.ClusterClient
 	once sync.Once
 )
 
 func Init() {
 	once.Do(func() {
-		redis_dsn := config.REDIS_DSN
-		if redis_dsn != "" {
-			opt, err := redis.ParseURL(redis_dsn)
-			util.Mustf(err, "init Redis failed")
+		// Redis Single
+		if config.REDIS_DSN != "" {
+			opt, err := redis.ParseURL(config.REDIS_DSN)
+			util.Mustf(err, "parse Redis by REDIS_DSN failed")
 
 			opt.DialTimeout = 3 * time.Second // no time unit = seconds
 			opt.ReadTimeout = 6 * time.Second
@@ -45,7 +47,54 @@ func Init() {
 			opt.PoolFIFO = true
 			opt.PoolSize = 10
 
+			// https://pkg.go.dev/github.com/redis/go-redis/v9#NewClient
 			rdb = redis.NewClient(opt)
+			_, err = rdb.Ping(context.TODO()).Result()
+			util.Mustf(err, "ping redis err")
+			return
+		}
+
+		// Redis Sentinel Cluster
+		if config.REDIS_SENTINEL_DSN != "" {
+			opt, err := redis.ParseClusterURL(config.REDIS_DSN)
+			util.Mustf(err, "init Redis by REDIS_SENTINEL_DSN failed")
+
+			// https://pkg.go.dev/github.com/redis/go-redis/v9#NewFailoverClient
+			rdb = redis.NewFailoverClient(&redis.FailoverOptions{
+				MasterName:    "master",
+				ClientName:    opt.ClientName,
+				SentinelAddrs: opt.Addrs,
+				Password:      opt.Password,
+
+				DialTimeout: 3 * time.Second, // no time unit = seconds
+				ReadTimeout: 6 * time.Second,
+
+				PoolFIFO: true,
+				PoolSize: 10,
+			})
+
+			_, err = rdb.Ping(context.TODO()).Result()
+			util.Mustf(err, "ping redis sentinel err")
+			return
+		}
+
+		// Redis Cluster
+		if config.REDIS_CLUTER_DSN != "" {
+			opt, err := redis.ParseClusterURL(config.REDIS_CLUTER_DSN)
+			util.Mustf(err, "parse Redis by REDIS_CLUTER_DSN failed")
+
+			opt.DialTimeout = 3 * time.Second // no time unit = seconds
+			opt.ReadTimeout = 6 * time.Second
+
+			// connection pool
+			opt.PoolFIFO = true
+			opt.PoolSize = 10
+
+			// https://pkg.go.dev/github.com/redis/go-redis/v9#NewClusterClient
+			rdbc = redis.NewClusterClient(opt)
+			_, err = rdb.Ping(context.TODO()).Result()
+			util.Mustf(err, "ping redis cluster err")
+			return
 		}
 	})
 }
