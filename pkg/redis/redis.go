@@ -33,7 +33,7 @@ var (
 
 func Init() {
 	once.Do(func() {
-		redis_dsn := config.REDIS_DSN.(string)
+		redis_dsn := config.REDIS_DSN
 		if redis_dsn != "" {
 			opt, err := redis.ParseURL(redis_dsn)
 			util.Mustf(err, "init Redis failed")

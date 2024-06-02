@@ -17,6 +17,7 @@ package main
 import (
 	"github.com/labstack/echo/v4"
 
+	"github.com/xiexianbin/go-echo-demo/pkg/log"
 	"github.com/xiexianbin/go-echo-demo/pkg/middleware"
 	"github.com/xiexianbin/go-echo-demo/router"
 )
@@ -36,8 +37,13 @@ import (
 // @host		127.0.0.1:1323
 // @BasePath	/api
 func main() {
+	// Basic
+	log.Init()
+
 	// Echo instance
 	e := echo.New()
+
+	e.Logger = &log.EchoLogger{ZapLogger: log.Logger}
 
 	// Middleware
 	middleware.Init(e)

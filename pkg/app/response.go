@@ -17,8 +17,9 @@ package app
 import "github.com/xiexianbin/go-echo-demo/pkg/ecode"
 
 type Response struct {
-	Code    ecode.Code `json:"code"`
-	Reason  string     `json:"reason"`
-	Message string     `json:"message"`
-	Data    any        `json:"data"`
+	Code      ecode.Code `json:"code"`
+	Reason    string     `json:"reason"`
+	Message   string     `json:"message"`
+	RequestID string     `json:"request_id"`
+	Data      any        `json:"data"`
 }

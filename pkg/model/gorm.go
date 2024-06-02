@@ -32,7 +32,7 @@ var (
 
 func Init() {
 	once.Do(func() {
-		mysql_dsn := config.MSYQL_DSN.(string)
+		mysql_dsn := config.MSYQL_DSN
 		if mysql_dsn != "" {
 			conf := &gorm.Config{}
 			DB, err := gorm.Open(mysql.Open(mysql_dsn), conf)

@@ -19,13 +19,16 @@ import (
 )
 
 var (
+	// log level, support debug, info, warn, error, dpanic, panic, fatal (default is debug)
+	// LOG_LEVEL = os.Getenv("LOG_LEVEL")
+
 	// MYSQL connection dsn
 	// ref https://gorm.io/docs/connecting_to_the_database.html#MySQL
 	// format user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local
-	MSYQL_DSN = util.Getenv("MSYQL_DSN", "")
+	MSYQL_DSN = util.LookupEnvStringOr("MSYQL_DSN", "")
 
 	// Redis connection dsn
 	// ref https://pkg.go.dev/github.com/go-redis/redis/v8#ParseURL
 	// format redis://<user>:<password>@<host>:<port>/<db_number>
-	REDIS_DSN = util.Getenv("REDIS_DSN", "")
+	REDIS_DSN = util.LookupEnvStringOr("REDIS_DSN", "")
 )
