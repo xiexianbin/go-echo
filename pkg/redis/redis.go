@@ -12,8 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Package redis for redis client
+// - github.com/go-redis/redis/v8 for redis 6, https://github.com/redis/go-redis/blob/v8.11.5/Makefile#L19
+// - github.com/redis/go-redis/v9 for redis 7, https://github.com/redis/go-redis/blob/v9.5.2/Makefile#L34
 // ref https://github.com/redis/go-redis?tab=readme-ov-file#quickstart
-
 package redis
 
 import (
