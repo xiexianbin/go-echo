@@ -20,7 +20,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	"github.com/xiexianbin/go-echo-demo/pkg/ecode"
+	"github.com/xiexianbin/go-echo-demo/pkg/code"
 )
 
 type CustomeContext struct {
@@ -45,21 +45,21 @@ func (c *CustomeContext) HasError() bool {
 }
 
 // Must use after HasErr() == true, return error
-func (c *CustomeContext) Must(codes ...ecode.Code) error {
+func (c *CustomeContext) Must(codes ...code.Code) error {
 	if !c.HasError() {
 		panic("no errors found")
 	}
-	code := ecode.CodeBadRequest
+	_code := code.CodeBadRequest
 	if len(codes) > 0 {
-		code = codes[0]
+		_code = codes[0]
 	}
 	msgs := make([]string, len(c.Errors))
 	for _, err := range c.Errors {
 		msgs = append(msgs, err.Error())
 	}
-	return c.Context.JSON(code.HTTPCode(), Response{
-		Code:    code,
-		Message: fmt.Sprintf("%s: %s", code.Message(), msgs),
+	return c.Context.JSON(_code.HTTPCode(), Response{
+		Code:    _code,
+		Message: fmt.Sprintf("%s: %s", _code.Message(), msgs),
 	})
 }
 
@@ -74,47 +74,47 @@ func (c *CustomeContext) ParsePage() *Page {
 	return nil
 }
 
-func (c *CustomeContext) WithCode(code ecode.Code) *CustomeContext {
+func (c *CustomeContext) WithCode(code code.Code) *CustomeContext {
 	c.xresp.Code = code
 	return c
 }
 
 func (c *CustomeContext) WithCodeOK() *CustomeContext {
-	c.xresp.Code = ecode.CodeOK
+	c.xresp.Code = code.CodeOK
 	return c
 }
 
 func (c *CustomeContext) WithCodeCreated() *CustomeContext {
-	c.xresp.Code = ecode.CodeCreated
+	c.xresp.Code = code.CodeCreated
 	return c
 }
 
 func (c *CustomeContext) WithCodeAccepted() *CustomeContext {
-	c.xresp.Code = ecode.CodeCreated
+	c.xresp.Code = code.CodeCreated
 	return c
 }
 func (c *CustomeContext) WithCodeNoContent() *CustomeContext {
-	c.xresp.Code = ecode.CodeNoContent
+	c.xresp.Code = code.CodeNoContent
 	return c
 }
 
 func (c *CustomeContext) WithCodeBadRequest() *CustomeContext {
-	c.xresp.Code = ecode.CodeBadRequest
+	c.xresp.Code = code.CodeBadRequest
 	return c
 }
 
 func (c *CustomeContext) WithCodeUnauthorized() *CustomeContext {
-	c.xresp.Code = ecode.CodeUnauthorized
+	c.xresp.Code = code.CodeUnauthorized
 	return c
 }
 
 func (c *CustomeContext) WithCodeForbidden() *CustomeContext {
-	c.xresp.Code = ecode.CodeForbidden
+	c.xresp.Code = code.CodeForbidden
 	return c
 }
 
 func (c *CustomeContext) WithCodeNotFound() *CustomeContext {
-	c.xresp.Code = ecode.CodeNotFound
+	c.xresp.Code = code.CodeNotFound
 	return c
 }
 

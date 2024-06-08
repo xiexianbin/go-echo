@@ -13,7 +13,7 @@
 // limitations under the License.
 
 // https://github.com/golang/go/blob/go1.22.3/src/net/http/Code.go
-package ecode
+package code
 
 const (
 	// common err code biz id is 100000
