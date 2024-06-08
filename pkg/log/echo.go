@@ -16,21 +16,29 @@ package log
 
 import (
 	"io"
+	"os"
 
 	"github.com/labstack/gommon/log"
 	"go.uber.org/zap"
 )
 
 // EchoLogger implemente echo.Logger logging interface
+// https://pkg.go.dev/github.com/labstack/echo/v4#Logger
 type EchoLogger struct {
+	output io.Writer
+
 	ZapLogger *zap.Logger
 }
 
 func (l *EchoLogger) Output() io.Writer {
-	return nil
+	if l.output == nil {
+		l.SetOutput(os.Stdout)
+	}
+	return l.output
 }
 
 func (l *EchoLogger) SetOutput(w io.Writer) {
+	l.output = w
 }
 
 func (l *EchoLogger) Prefix() string {

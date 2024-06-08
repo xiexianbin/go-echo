@@ -3,14 +3,16 @@ definitions:
   app.Response:
     properties:
       code:
-        $ref: '#/definitions/ecode.Code'
+        $ref: '#/definitions/code.Code'
       data: {}
       message:
         type: string
       reason:
         type: string
+      request_id:
+        type: string
     type: object
-  ecode.Code:
+  code.Code:
     enum:
     - 100200
     - 100201

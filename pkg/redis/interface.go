@@ -21,8 +21,8 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-// RedisInterface for both redis.Client and redis.ClusterClient methods
-type RedisInterface interface {
+// IRedis for both redis.Client and redis.ClusterClient methods
+type IRedis interface {
 	ACLDryRun(ctx context.Context, username string, command ...interface{}) *redis.StringCmd
 	ACLLog(ctx context.Context, count int64) *redis.ACLLogCmd
 	ACLLogReset(ctx context.Context) *redis.StatusCmd

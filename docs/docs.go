@@ -260,7 +260,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "code": {
-                    "$ref": "#/definitions/ecode.Code"
+                    "$ref": "#/definitions/code.Code"
                 },
                 "data": {},
                 "message": {
@@ -268,10 +268,13 @@ const docTemplate = `{
                 },
                 "reason": {
                     "type": "string"
+                },
+                "request_id": {
+                    "type": "string"
                 }
             }
         },
-        "ecode.Code": {
+        "code.Code": {
             "type": "integer",
             "enum": [
                 100200,

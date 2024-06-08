@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Package log implements the app logging package by uber zap.
 package log
 
 import (

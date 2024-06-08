@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Package model implements the app GORM object by gorm.io/gorm.
 package model
 
 import (
@@ -20,8 +21,10 @@ import (
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	gorml "gorm.io/gorm/logger"
 
 	"github.com/xiexianbin/go-echo-demo/config"
+	"github.com/xiexianbin/go-echo-demo/pkg/log"
 	"github.com/xiexianbin/go-echo-demo/pkg/util"
 )
 
@@ -34,7 +37,16 @@ func Init() {
 	once.Do(func() {
 		mysql_dsn := config.MSYQL_DSN
 		if mysql_dsn != "" {
-			conf := &gorm.Config{}
+			conf := &gorm.Config{
+				Logger: &GormLogger{
+					ZapLogger: log.Logger,
+					Config: gorml.Config{
+						SlowThreshold:             200 * time.Microsecond,
+						IgnoreRecordNotFoundError: true,
+						LogLevel:                  gorml.Silent,
+					},
+				},
+			}
 			DB, err := gorm.Open(mysql.Open(mysql_dsn), conf)
 			util.Mustf(err, "init MYSQL failed")
 

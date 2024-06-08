@@ -21,7 +21,7 @@ import (
 	"github.com/labstack/echo/v4"
 
 	"github.com/xiexianbin/go-echo-demo/pkg/app"
-	"github.com/xiexianbin/go-echo-demo/pkg/ecode"
+	"github.com/xiexianbin/go-echo-demo/pkg/code"
 )
 
 // ref https://github.com/swaggo/swag/blob/master/example/celler/controller/accounts.go
@@ -80,7 +80,7 @@ func GetFoo1(c echo.Context) error {
 func GetFoo2(c echo.Context) error {
 	ctx := c.(app.CustomeContext)
 	id := ctx.Param("id")
-	return ctx.WithCode(ecode.CodeOK).WithData(id).RJSON()
+	return ctx.WithCode(code.CodeOK).WithData(id).RJSON()
 }
 
 // SaveFoo1 example

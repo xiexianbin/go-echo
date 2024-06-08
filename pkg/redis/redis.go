@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package redis for redis client
+// Package redis implements a Redis client by github.com/redis/go-redis.
 // - github.com/go-redis/redis/v8 for redis 6, https://github.com/redis/go-redis/blob/v8.11.5/Makefile#L19
 // - github.com/redis/go-redis/v9 for redis 7, https://github.com/redis/go-redis/blob/v9.5.2/Makefile#L34
 // ref https://github.com/redis/go-redis?tab=readme-ov-file#quickstart
@@ -101,7 +101,32 @@ func Init() {
 	})
 }
 
-func Get(key string) ([]byte, error) {
+// Pool return redis.ClusterClient or redis.Client
+// Usage demo:
+//
+//	Pool().Get(...)
+func Pool() IRedis {
+	if rdbc != nil {
+		return rdbc
+	}
+	if rdb != nil {
+		return rdb
+	}
+	panic("no redis client and cluster client init")
+}
 
-	return nil, nil
+// ClientPool return redis client
+func ClientPool() *redis.Client {
+	if rdb != nil {
+		return rdb
+	}
+	panic("no redis client init")
+}
+
+// ClusterClientPool return redis cluster client
+func ClusterClientPool() *redis.Client {
+	if rdb != nil {
+		return rdb
+	}
+	panic("no redis cluster client init")
 }

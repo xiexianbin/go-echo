@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// ref https://github.com/argoproj/argo-workflows/blob/v3.5.7/util/env/env.go
 package util
 
 import (
@@ -24,6 +23,8 @@ import (
 
 	"github.com/xiexianbin/go-echo-demo/pkg/log"
 )
+
+// ref https://github.com/argoproj/argo-workflows/blob/v3.5.7/util/env/env.go
 
 func LookupEnvDurationOr(key string, o time.Duration) time.Duration {
 	v, found := os.LookupEnv(key)
